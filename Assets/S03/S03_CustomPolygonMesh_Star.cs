@@ -20,6 +20,29 @@ public class S03_CustomPolygonMesh_Star : MonoBehaviour
             new Vector3(-4f, 1f, 0f),   // 9 바깥
             new Vector3(-1f, 1f, 0f),   // 10 안쪽
         };
+
+        // 중심점(0)을 기준으로 삼각형 10개 구성
+        int[] triangles = new int[]
+        {
+            0, 1, 2,
+            0, 2, 3,
+            0, 3, 4,
+            0, 4, 5,
+            0, 5, 6,
+            0, 6, 7,
+            0, 7, 8,
+            0, 8, 9,
+            0, 9, 10,
+            0, 10, 1,
+        };
+
+        Mesh mesh = new Mesh();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+
+        GetComponent<MeshFilter>().mesh = mesh;
+        GetComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
     }
 
     
