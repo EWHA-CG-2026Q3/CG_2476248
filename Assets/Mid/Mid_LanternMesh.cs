@@ -12,6 +12,7 @@ public class Mid_LanternMesh : MonoBehaviour
     {
         // ---------- Á¤Á¡ ----------
         Vector3[] vertices = new Vector3[2 * n + 2];
+        Vector2[] uvs = new Vector2[2 * n + 2];
 
         for (int i = 0; i < n; i++)
         {
@@ -21,12 +22,16 @@ public class Mid_LanternMesh : MonoBehaviour
 
             vertices[i] = new Vector3(c * bottomRadius, 0f, s * bottomRadius); // ¾Æ·¡ ¿ø
             vertices[n + i] = new Vector3(c * topRadius, height, s * topRadius);    // À§ ¿ø
+            uvs[i] = new Vector2((float)i / n, 0f);
+            uvs[n + i] = new Vector2((float)i / n, 1f);
         }
 
         int topCenter = 2 * n;       // À§ ¶Ñ²± °¡¿îµ¥ Á¡ ¹øÈ£
         int bottomCenter = 2 * n + 1; // ¾Æ·¡ ¶Ñ²± °¡¿îµ¥ Á¡ ¹øÈ£
         vertices[topCenter] = new Vector3(0f, height, 0f);
         vertices[bottomCenter] = new Vector3(0f, 0f, 0f);
+        uvs[topCenter] = new Vector2(0.5f, 1f);
+        uvs[bottomCenter] = new Vector2(0.5f, 0f);
 
         // ---------- »ï°¢Çü ----------
         // ¿·¸é n°³ ¡¿ »ï°¢Çü 2°³ + À§ ¶Ñ²± n°³ + ¾Æ·¡ ¶Ñ²± n°³ = 4n°³, °¢ 3°³ ÀÎµ¦½º
@@ -56,6 +61,7 @@ public class Mid_LanternMesh : MonoBehaviour
         // ---------- ¸Þ½Ã Àû¿ë (S03°ú °°Àº ¹æ½Ä) ----------
         Mesh mesh = new Mesh();
         mesh.vertices = vertices;
+        mesh.uv = uvs;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
         GetComponent<MeshFilter>().mesh = mesh;
